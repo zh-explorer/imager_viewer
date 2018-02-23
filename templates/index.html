@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }}</title>
+</head>
+</html>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=512">
+    <title>Everything</title>
+    <link rel="stylesheet" href="/static/main.css" type="text/css">
+</head>
+<body>
+<div style="text-align: center;">
+    <br>
+    <br>
+    <table cellspacing="0" width="480px">
+        <tr>
+            <td colspan="3"><p class="indexof">索引 /{{ path }}</p></td>
+            <td colspan="3"><p class="to_img"><a
+                    href="{{ url_for('list_img',file_path=path) }}">img</a></p></td>
+        </tr>
+        {% if path != '' %}
+            <tr>
+                <td class="updir" colspan="3"><a href="{{ url_for('main_list', path_name=up_dir) }}">
+                    <img class="icon" src="/static/updir.gif" alt="">上一目录..</a>
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td class="nameheader">
+                <a href="/?sort=name&amp;ascending=0">
+                    <span class="nobr">
+                        <nobr>名称<img class="updown" src="/static/up.gif" alt=""></nobr>
+                    </span>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="lineshadow" height="1"></td>
+        </tr>
+
+        {% for item in files %}
+            <tr class="trdata2">
+                <td class="{{ item.type }}">
+                    <span class="nobr">
+                        <nobr>
+                            {% if item.type == 'file' %}
+                                <a href="{{ url_for('custom_file', file_path=item.path) }}">
+                                    <img class="icon" src="/static/{{ item.type }}.gif" alt="">{{ item.name }}</a>
+                            {% else %}
+                                <a href="{{ url_for('main_list', path_name=item.path) }}">
+                                    <img class="icon" src="/static/{{ item.type }}.gif" alt="">{{ item.name }}</a>
+                            {% endif %}
+                        </nobr>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
